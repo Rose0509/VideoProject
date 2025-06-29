@@ -17,7 +17,7 @@ services:
     # Render détectera automatiquement le port utilisé par process.env.PORT
 
   # 2. L'application cliente React
-  - type: static
+  - type: static_site
     name: appel-video-client
     # Indique à Render d'utiliser l'environnement Node.js pour le build
     env: static
