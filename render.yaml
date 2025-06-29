@@ -1,0 +1,37 @@
+# Fichier de configuration pour le déploiement sur Render
+# https://render.com/docs/blueprint-spec
+
+services:
+  # 1. Le serveur de signalisation WebSocket
+  - type: web
+    name: appel-video-server
+    # Indique à Render d'utiliser l'environnement Node.js
+    env: node
+    # Spécifie le répertoire où se trouve le code du serveur
+    rootDir: Signaling-server
+    plan: free # Utilise le plan gratuit de Render
+    # Commande pour installer les dépendances du serveur
+    buildCommand: "npm install"
+    # Commande pour démarrer le serveur
+    startCommand: "node server.js"
+    # Render détectera automatiquement le port utilisé par process.env.PORT
+
+  # 2. L'application cliente React
+  - type: static
+    name: appel-video-client
+    # Indique à Render d'utiliser l'environnement Node.js pour le build
+    env: static
+    # Le code du client est à la racine du projet
+    rootDir: ./
+    plan: free # Utilise le plan gratuit de Render
+    # Commande pour construire les fichiers statiques de l'application React
+    buildCommand: "npm install && npm run build"
+    # Le répertoire où create-react-app place les fichiers construits
+    publishDir: build
+    # C'est ici que nous connectons le client au serveur !
+    envVars:
+      - key: REACT_APP_WEBSOCKET_URL
+        fromService:
+          type: web
+          name: appel-video-server
+          property: url # Render remplacera ceci par l'URL du serveur WebSocket

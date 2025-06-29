@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Vous pouvez ajouter d'autres styles globaux ici si nécessaire */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif; /* Assurez-vous que cette police est chargée ou fallback */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Styles pour garantir que la vidéo ne déborde pas */
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
